@@ -1,0 +1,122 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: challenge-api-service-prod
+host: ss6b2ke2ca.execute-api.us-east-1.amazonaws.com
+basePath: /Prod
+schemes:
+  - https
+definitions:
+  RateQuotes:
+    properties:
+      rateQuotes:
+        type: array
+        items:
+          type: object
+          properties:
+            lenderName:
+              type: string
+              example: TFB Federal Credit Union
+              description: The name of the lender
+            loanType:
+              type: string
+              example: 30YR Fixed
+              description: The type of loan
+            interestRate:
+              type: number
+              example: 4.125
+              description: The interest rate of the loan
+            closingCosts:
+              type: number
+              example: 10000
+              description: The fees the lender with charge when the loan is closed
+            monthlyPayment:
+              type: number
+              example: 1000
+              description: the required monthly payment
+            apr:
+              type: number
+              example: 4.25
+              description: the APR of the loan
+          required:
+            - lenderName
+            - loanType
+            - interestRate
+            - closingCosts
+            - monthlyPayment
+            - apr
+    required:
+      - rateQuotes
+  Error:
+    properties:
+      errors:
+        type: array
+        items:
+          type: string
+        description: A list of errors
+    required:
+      - errors
+securityDefinitions:
+  OUAuth:
+    type: apiKey
+    in: header
+    name: Authorization
+security:
+  - OUAuth: []
+paths:
+  /quotes:
+    get:
+      summary: Request rate quotes
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+#        - in: query
+#          name: loanSize
+#          type: number
+#          description: Loan size in dollars
+#          required: true
+#        - in: query
+#          name: creditScore
+#          type: integer
+#          minimum: 300
+#          maximum: 800
+#          description: The borrowers credit score
+#          required: true
+#        - in: query
+#          name: propertyType
+#          type: string
+#          enum:
+#            - SingleFamily
+#            - Condo
+#            - Townhouse
+#            - MultiFamily
+#          description: The type of property for which a mortgage is being requested
+#          required: true
+#        - in: query
+#          name: occupancy
+#          type: string
+#          enum:
+#            - Primary
+#            - Secondary
+#            - Investment
+#          description: How the borrower will use the property
+#          required: true
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/RateQuotes'
+        '400':
+          description: Invalid Request
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Not Authorized
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
