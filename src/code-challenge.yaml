@@ -72,37 +72,37 @@ paths:
       consumes:
         - application/json
       parameters:
-#        - in: query
-#          name: loanSize
-#          type: number
-#          description: Loan size in dollars
-#          required: true
-#        - in: query
-#          name: creditScore
-#          type: integer
-#          minimum: 300
-#          maximum: 800
-#          description: The borrowers credit score
-#          required: true
-#        - in: query
-#          name: propertyType
-#          type: string
-#          enum:
-#            - SingleFamily
-#            - Condo
-#            - Townhouse
-#            - MultiFamily
-#          description: The type of property for which a mortgage is being requested
-#          required: true
-#        - in: query
-#          name: occupancy
-#          type: string
-#          enum:
-#            - Primary
-#            - Secondary
-#            - Investment
-#          description: How the borrower will use the property
-#          required: true
+        - in: query
+          name: loanSize
+          type: number
+          description: Loan size in dollars
+          required: true
+        - in: query
+          name: creditScore
+          type: integer
+          minimum: 300
+          maximum: 800
+          description: The borrowers credit score
+          required: true
+        - in: query
+          name: propertyType
+          type: string
+          enum:
+            - SingleFamily
+            - Condo
+            - Townhouse
+            - MultiFamily
+          description: The type of property for which a mortgage is being requested
+          required: true
+        - in: query
+          name: occupancy
+          type: string
+          enum:
+            - Primary
+            - Secondary
+            - Investment
+          description: How the borrower will use the property
+          required: true
       responses:
         '200':
           description: Success
@@ -120,3 +120,15 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/Error'
+
+
+
+
+
+  export const fetchStepsApi = _ => {
+get('/demo_steps', { params: { id: trainingId() } }).then(({ data }) => {
+                               store.dispatch(doneStepsFetch({ steps: data }));
+                               const id = proficiencyWorkflowId();
+                               setTimeout(() => getPipelineSteps(id), 200);
+}).catch(errorHandler(errorStepsFetch));
+};
